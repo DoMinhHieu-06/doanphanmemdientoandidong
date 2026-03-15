@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Chatbot by hieu</title>
+
+<style>
+
+body{
+    font-family: "Segoe UI", Arial;
+    background: linear-gradient(135deg,#4facfe,#00f2fe);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.chat-container{
+    width:420px;
+    height:550px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+}
+
+.chat-header{
+    background:#007bff;
+    color:white;
+    text-align:center;
+    padding:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.messages{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+    background:#f7f7f7;
+}
+
+.message{
+    display:flex;
+    margin-bottom:10px;
+}
+
+.message span{
+    padding:10px 14px;
+    border-radius:15px;
+    max-width:70%;
+    font-size:14px;
+}
+
+.user{
+    justify-content:flex-end;
+}
+
+.user span{
+    background:#007bff;
+    color:white;
+}
+
+.bot{
+    justify-content:flex-start;
+}
+
+.bot span{
+    background:#e4e6eb;
+}
+
+.chat-footer{
+    display:flex;
+    border-top:1px solid #ddd;
+    padding:10px;
+    background:white;
+}
+
+.chat-footer input{
+    flex:1;
+    border:none;
+    padding:10px;
+    border-radius:20px;
+    background:#f1f1f1;
+    outline:none;
+}
+
+.chat-footer button{
+    margin-left:10px;
+    padding:10px 18px;
+    border:none;
+    border-radius:20px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.chat-footer button:hover{
+    background:#0056b3;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+<div class="chat-header">
+Chatbot AI
+</div>
+
+<div class="messages" id="messages"></div>
+
+<form id="chat-form" class="chat-footer">
+<input type="text" id="user-input" placeholder="Nhập tin nhắn..." required>
+<button type="submit">Gửi</button>
+</form>
+
+</div>
+
+<script>
+
+const chatForm = document.getElementById("chat-form")
+const userInput = document.getElementById("user-input")
+const messagesDiv = document.getElementById("messages")
+
+chatForm.addEventListener("submit",function(e){
+
+e.preventDefault()
+
+const text = userInput.value.trim()
+
+if(text==="") return
+
+appendMessage("user",text)
+
+userInput.value=""
+
+let reply = generateBotReply(text)
+
+setTimeout(function(){
+
+appendMessage("bot",reply)
+
+messagesDiv.scrollTop = messagesDiv.scrollHeight
+
+},500)
+
+})
+
+function appendMessage(sender,text){
+
+const msgDiv = document.createElement("div")
+
+msgDiv.classList.add("message",sender)
+
+const span = document.createElement("span")
+
+span.textContent = text
+
+msgDiv.appendChild(span)
+
+messagesDiv.appendChild(msgDiv)
+
+}
+
+function generateBotReply(text){
+
+let msg = text.toLowerCase()
+
+if(msg.includes("hello") || msg.includes("xin chào"))
+return "Chào bạn 👋"
+
+else if(msg.includes("tên bạn là gì"))
+return "Tôi là chatbot của bạn 🤖"
+
+else if(msg.includes("bạn khỏe không"))
+return "Tôi luôn sẵn sàng hỗ trợ bạn!"
+
+else
+return "Xin lỗi tôi chưa hiểu câu hỏi."
+
+}
+
+</script>
+
+</body>
+</html>
